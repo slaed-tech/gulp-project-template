@@ -2,7 +2,7 @@
 const gulp = require("gulp");
 
 // PATH
-const PROJECT_FOLDER = require("path").basename(__dirname);
+const PROJECT_FOLDER = "docs";
 const SOURCE_FOLDER  = "#src";
 
 let path = {
@@ -16,9 +16,9 @@ let path = {
     src: {
         HTML:   [`${SOURCE_FOLDER}/*.html`, `!${SOURCE_FOLDER}/_*.html`],
         CSS:    `${SOURCE_FOLDER}/scss/style.scss`,
-        JS:     `${SOURCE_FOLDER}/js/main.js`,
+        JS:     `${SOURCE_FOLDER}/js/**/*.js`,
         IMG:    `${SOURCE_FOLDER}/img/**/*.+(png|jpg|gif|ico|svg|webp)`,
-        FONTS:  `${SOURCE_FOLDER}/fonts/**/*.ttf`,
+        FONTS:  `${SOURCE_FOLDER}/fonts/**/*.woff`,
     },
     watch: {
         HTML:   `${SOURCE_FOLDER}/**/*.html`,
@@ -43,10 +43,7 @@ const { src, dest }  = require("gulp"),
         include      = require("gulp-file-include"),
         uglify_js    = require("gulp-uglify-es").default,
         webp         = require("gulp-webp"),
-        webp_html    = require("gulp-webp-html"),
-        ttf2woff     = require("gulp-ttf2woff"),
-        ttf2woff2    = require("gulp-ttf2woff2"),
-        fonter       = require("gulp-fonter");
+        webp_html    = require("gulp-webp-html");
 
 // Functions
 function browserSync() {
@@ -92,17 +89,19 @@ function css() {
 }
 
 function js() {
-    return src(path.src.JS)
-        .pipe(include())
-        .pipe(dest(path.build.JS))
-        .pipe(uglify_js())
-        .pipe(
-            rename({
-                extname: ".min.js",
-            })
-        )
-        .pipe(dest(path.build.JS))
-        .pipe(browsersync.stream());
+    return src([
+        path.src.JS,
+    ])
+    .pipe(include())
+    .pipe(dest(path.build.JS))
+    .pipe(uglify_js())
+    .pipe(
+        rename({
+            extname: ".min.js",
+        })
+    )
+    .pipe(dest(path.build.JS))
+    .pipe(browsersync.stream());
 }
 
 function img() {
@@ -118,24 +117,12 @@ function img() {
         .pipe(browsersync.stream());
 }
 
-gulp.task("otf2ttf", () => {
-    return src([`${SOURCE_FOLDER}/fonts/**/*.otf`])
-        .pipe(fonter({
-            formats: ["ttf"],
-        }))
-        .pipe(dest(`${SOURCE_FOLDER}/fonts/`));
-})
-
-function font() {
-    src(path.src.FONTS)
-        .pipe(ttf2woff())
-        .pipe(dest(path.build.FONTS));
-    return src(path.src.FONTS) 
-        .pipe(ttf2woff2())
+function fonts() {
+    return src(path.src.FONTS)
         .pipe(dest(path.build.FONTS));
 }
 
-function fontStyle() {
+function fontsStyle() {
     let file_content = fs.readFileSync(`${SOURCE_FOLDER}/scss/fonts.scss`);
     if (file_content == '') {
         fs.writeFile(`${SOURCE_FOLDER}/scss/fonts.scss`, '', cb);
@@ -154,10 +141,7 @@ function fontStyle() {
         })
     }
 }
-
-function cb() {
-
-}
+function cb() { }
 
 function watchFiles() {
     gulp.watch([path.watch.HTML], html);
@@ -170,7 +154,7 @@ function clean() {
     return del(path.clean.DIST);
 }
 
-let build = gulp.series(clean, gulp.parallel(html, css), js, img, font, fontStyle)
+let build = gulp.series(clean, gulp.parallel(html, css), js, img, fonts, fontsStyle)
 let watch = gulp.parallel(build, watchFiles, browserSync);
 
 // Export
