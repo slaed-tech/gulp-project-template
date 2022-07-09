@@ -1,0 +1,26 @@
+<form class="feedback__form @@style @@addclass" onsubmit="javascript:popExpand('.type__callback');" method="post" action="javascript:alert('hello');">
+    <div class="input">
+        <div class="input-wrap">
+            <label for="name">@@label_name</label>
+            <input type="text" class="field _req" id="name" name="name">
+        </div>
+        <div class="input-wrap">
+            <label for="email">@@label_email</label>
+            <input type="email" class="field _req" id="email" name="email">
+        </div>
+        <div class="input-wrap _tel-wrap">
+            <label for="phone">@@label_tel</label>
+            <input type="tel" class="field _req _tel" id="phone" name="tel">
+        </div>
+    </div>
+    <div class="btn__wrap">
+        <p class="label form_gor_label"></p>
+        @@include('_input-btn.html', {
+            "title": "@@btn_title",
+            "addclass": "@@btn_addclass",
+            "style": "@@btn_style",
+            "padding": "@@btn_padding",
+        })
+        <p class="desc">Натискаючи на кнопку, ви погоджуєтесь<br> на обробку персональних даних</p>
+    </div>
+</form>

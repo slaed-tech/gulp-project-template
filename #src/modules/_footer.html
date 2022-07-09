@@ -1,0 +1,49 @@
+<footer id="footer" class="footer">
+    <div class="main_container">
+        <h3 class="footer__title title-3">Розкажіть про свій проект</h3>
+        @@include('../components/_form.html', {
+            "style": "form_gor",
+            "label_name": "Як вас звати?",
+            "label_email": "Ваш email",
+            "label_tel": "Телефон з мессенджером",
+            "addclass": "footer__form",
+
+            "btn_title": "залишити заявку",
+            "btn_addclass": "form__btn",
+            "btn_style": "btn-1",
+            "btn_padding": "26px 78px",
+        })
+        <div class="footer__wrap">
+            <div class="contacts__wrap">
+                <div class="left">
+                    <div class="contact">
+                        <p class="label sub">Telegram</p>
+                        <a href="#" class="contact__link link">@logochopper</a>
+                    </div>
+                    <div class="contact">
+                        <p class="label sub">Email</p>
+                        <a href="#" class="contact__link link">logochopper@gmail.com</a>
+                    </div>
+                </div>
+                <div class="right">
+                        <a href="#" class="social__link link social s-1">
+                            <img src="img/social/fb.svg" alt="facebook" class="ico">
+                        </a>
+                        <a href="#" class="social__link link social s-2">
+                            <img src="img/social/inst.svg" alt="instagram" class="ico">
+                        </a>
+                        <a href="#" class="social__link link social s-3">
+                            <img src="img/social/be.svg" alt="behance" class="ico">
+                        </a>
+                        <a href="#" class="social__link link social s-4">
+                            <img src="img/social/dr.svg" alt="dribble" class="ico">
+                        </a>
+                </div>
+            </div>
+            <div class="metainfo__wrap">
+                <a href="/" class="logo__link"><img src="img/logo.svg" alt="logo" class="logo"></a>
+                <p class="copyright">Дизайн і розробка <a href="https://uixmill.com/" class="link">UIXMILL</a></p>
+            </div>
+        </div>
+    </div>
+</footer>
